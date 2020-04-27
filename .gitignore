@@ -1,0 +1,10 @@
+﻿################################################################################
+# 此 .gitignore 文件已由 Microsoft(R) Visual Studio 自动创建。
+################################################################################
+
+/.vs
+/ShareDemo/.vs/TestId4
+/ShareDemo/Id4WebApi/bin/Debug/netcoreapp3.1
+/ShareDemo/Id4WebApi/obj
+/ShareDemo/TestId4/bin/Debug/netcoreapp3.1
+/ShareDemo/TestId4/obj
