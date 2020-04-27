@@ -82,6 +82,18 @@ namespace Id4WebApi
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddMediatR(typeof(Startup));
 
+            services.Configure<ApiBehaviorOptions>(opt => 
+            {
+                opt.InvalidModelStateResponseFactory = actionContext =>
+                {
+                    var errors = actionContext.ModelState.Where(o => o.Value.Errors.Count > 0).Select(o => o.Value.Errors.First().ErrorMessage).ToList();
+                    var msg = string.Join("&&", errors);
+                    return new JsonResult(new CallResult{ 
+                        StatusCode = "500",
+                        Message = msg
+                    });
+                };
+            });
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
