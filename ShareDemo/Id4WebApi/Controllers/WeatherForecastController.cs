@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Autofac;
 using AutoMapper;
 using Id4WebApi.DTOs;
 using Id4WebApi.Events;
@@ -22,6 +23,11 @@ namespace Id4WebApi.Controllers
         private readonly IMapper _mapper;
         private readonly IMediator _mediator;
         private readonly IValuesService _valuesService;
+
+        #region 属性注入
+        public Values2Service _values2Service { get; set; } 
+        public Values3Service _values3Service { get; set; }
+        #endregion
 
         public WeatherForecastController(IMapper mapper,IMediator mediator, IValuesService valuesService)
         {
@@ -93,6 +99,22 @@ namespace Id4WebApi.Controllers
         [HttpGet("value/list")]
         public IEnumerable<string> Get()
         {
+            var valueResult = _valuesService.FindAll();
+            var value2Result = _values2Service.FindAll();
+            var value3Result = _values3Service.FindAll();
+
+            var value4Result = ServiceLocator._lifetimeScope.Resolve<IValues2Service>(new NamedParameter("type", "4")).FindAll();
+            var value5Result = ServiceLocator._lifetimeScope.Resolve<IValues2Service>(new NamedParameter("type", "5")).FindAll();
+
+            var value6Instance1 = ServiceLocator._lifetimeScope.Resolve<Values6Service>();
+            var value6Instance2 = ServiceLocator._lifetimeScope.Resolve<Values6Service>();
+            var IsEqual = Equals(value6Instance1, value6Instance2);
+
+            var boolResult = ServiceLocator._lifetimeScope.Resolve<CallResult<bool>>();
+
+            var value4Result2 = ServiceLocator._lifetimeScope.ResolveNamed<IValues2Service>("4").FindAll();
+            var value5Result2 = ServiceLocator._lifetimeScope.ResolveNamed<IValues2Service>("5").FindAll();
+
             return _valuesService.FindAll();
         }
 
@@ -101,6 +123,8 @@ namespace Id4WebApi.Controllers
         {
             return _valuesService.Find(id);
         } 
+
+
         #endregion
 
         #region IdentityServer4测试

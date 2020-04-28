@@ -14,16 +14,16 @@ namespace Id4WebApi.Services
 
         public IEnumerable<string> FindAll()
         {
-            this._logger.LogDebug("{method} called", nameof(this.FindAll));
+            this._logger.LogDebug("value1 {method} called", nameof(this.FindAll));
 
-            return new[] { "value1", "value2" };
+            return new[] { "value1" };
         }
 
         public string Find(int id)
         {
-            this._logger.LogDebug("{method} called with {id}", nameof(this.Find), id);
+            this._logger.LogDebug("value1 {method} called with {id}", nameof(this.Find), id);
 
-            return $"value{id}";
+            return $"value1:{id}";
         }
     }
 }

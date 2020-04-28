@@ -23,6 +23,7 @@ using Id4WebApi.Handlers;
 using FluentValidation.AspNetCore;
 using Id4WebApi.Validators;
 using Autofac;
+using Autofac.Extensions.DependencyInjection;
 
 namespace Id4WebApi
 {
@@ -78,7 +79,7 @@ namespace Id4WebApi
             {
                 cfg.RegisterValidatorsFromAssemblyContaining<StoreAddDTOVaildator>();
                 cfg.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
-            });
+            }).AddControllersAsServices();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddMediatR(typeof(Startup));
 
@@ -87,7 +88,7 @@ namespace Id4WebApi
                 opt.InvalidModelStateResponseFactory = actionContext =>
                 {
                     var errors = actionContext.ModelState.Where(o => o.Value.Errors.Count > 0).Select(o => o.Value.Errors.First().ErrorMessage).ToList();
-                    var msg = string.Join("&&", errors);
+                    var msg = string.Join(" && ", errors);
                     return new JsonResult(new CallResult{ 
                         StatusCode = "500",
                         Message = msg
@@ -120,6 +121,9 @@ namespace Id4WebApi
             {
                 endpoints.MapControllers();
             });
+
+            ILifetimeScope autofacRoot = app.ApplicationServices.GetAutofacRoot();
+            ServiceLocator.SetContainer(autofacRoot);
         }
     }
 }
