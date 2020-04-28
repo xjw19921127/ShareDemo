@@ -71,7 +71,7 @@ namespace TestId4
                 {
                     opt.ConfigureDbContext = context =>
                     {
-                        context.UseMySql("Data Source=10.100.41.108;Port=3029;User ID=TEWiHotelBase_test;Password=Ke4ps6Rcf6w0nAvwJZStCj;Initial Catalog=TEWiHotelBase;Charset=utf8;SslMode=none;Max pool size=10", sql =>
+                        context.UseMySQL("Data Source=10.100.41.108;Port=3029;User ID=TEWiHotelBase_test;Password=Ke4ps6Rcf6w0nAvwJZStCj;Initial Catalog=TEWiHotelBase;Charset=utf8;SslMode=none;Max pool size=10", sql =>
                         {
                             sql.MigrationsAssembly(migrationsAssembly);
                         });
