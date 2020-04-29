@@ -8,3 +8,13 @@
 /ShareDemo/Id4WebApi/obj
 /ShareDemo/TestId4/bin/Debug/netcoreapp3.1
 /ShareDemo/TestId4/obj
+/ShareDemo/.vs/ShareDemo
+/ShareDemo/ContainerApp/.vs/RiiZoo.HotelContainerApp/DesignTimeBuild
+/ShareDemo/ContainerApp/bin/Debug
+/ShareDemo/ContainerApp/obj
+/ShareDemo/ContainerApp.Interface/bin/Debug/netcoreapp3.1
+/ShareDemo/ContainerApp.Interface/obj
+/ShareDemo/IdentityServer/bin/Debug/netcoreapp3.1
+/ShareDemo/IdentityServer/obj
+/ShareDemo/WebApi/bin/Debug/netcoreapp3.1
+/ShareDemo/WebApi/obj
