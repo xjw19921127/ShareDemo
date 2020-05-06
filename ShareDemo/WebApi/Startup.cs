@@ -89,6 +89,8 @@ namespace WebApi
                     });
                 };
             });
+
+            var xjwName = Configuration["xjw"];
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
