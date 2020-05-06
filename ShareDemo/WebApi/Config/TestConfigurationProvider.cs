@@ -11,8 +11,18 @@ namespace WebApi.Config
         public override void Load()
         {
             Data = new Dictionary<string, string> {
-                { "xjw", "xujiawen" }
+                { "xjw", "xujiawen1" }
             };
+        }
+
+        public override bool TryGet(string key, out string value)
+        {
+            if (key == "xjw")
+            {
+                value = "xujiawen11";
+                return true;
+            }
+            return base.TryGet(key, out value);
         }
     }
 }

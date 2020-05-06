@@ -14,5 +14,15 @@ namespace WebApi.Config
                 { "xjw", "xujiawen2" }
             };
         }
+
+        public override bool TryGet(string key, out string value)
+        {
+            if (key == "xjw")
+            {
+                value = "xujiawen22";
+                return true;
+            }
+            return base.TryGet(key, out value);
+        }
     }
 }
