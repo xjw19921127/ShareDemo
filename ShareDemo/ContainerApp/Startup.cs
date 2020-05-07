@@ -1,4 +1,8 @@
+using Autofac;
 using ContainerApp.Extensions;
+using DemoAApi;
+using DemoBApi;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -33,9 +37,19 @@ namespace ContainerApp
 
             //数据库配置
             services.AddDatabaseSetup(Configuration);
+            
+            //添加MediatR
+            services.AddMediatR(typeof(Startup));
 
             //Service注入
             services.AddDependencyInjectionSetup();
+        }
+
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.RegisterModule(new DemoAAutofacModule());
+            builder.RegisterModule(new DemoBAutofacModule());
+            builder.RegisterModule(new AutofacModule());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

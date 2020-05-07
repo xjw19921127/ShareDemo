@@ -18,3 +18,11 @@
 /ShareDemo/IdentityServer/obj
 /ShareDemo/WebApi/bin/Debug/netcoreapp3.1
 /ShareDemo/WebApi/obj
+/ShareDemo/ContainerApp.Event/bin/Debug/netcoreapp3.1
+/ShareDemo/ContainerApp.Event/obj
+/ShareDemo/ContainerApp.Handler/bin/Debug/netcoreapp3.1
+/ShareDemo/ContainerApp.Handler/obj
+/ShareDemo/DemoAApi/bin/Debug/netcoreapp3.1
+/ShareDemo/DemoAApi/obj
+/ShareDemo/DemoBApi/bin/Debug/netcoreapp3.1
+/ShareDemo/DemoBApi/obj

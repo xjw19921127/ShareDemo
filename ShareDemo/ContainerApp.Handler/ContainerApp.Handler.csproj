@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ContainerApp.Event\ContainerApp.Event.csproj" />
+    <ProjectReference Include="..\DemoAApi\DemoAApi.csproj" />
+    <ProjectReference Include="..\DemoBApi\DemoBApi.csproj" />
+  </ItemGroup>
+
+</Project>
