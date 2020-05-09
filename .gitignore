@@ -26,3 +26,7 @@
 /ShareDemo/DemoAApi/obj
 /ShareDemo/DemoBApi/bin/Debug/netcoreapp3.1
 /ShareDemo/DemoBApi/obj
+/ShareDemo/EventBus/bin/Debug/netcoreapp3.1
+/ShareDemo/EventBus/obj
+/ShareDemo/EventBusRabbitMQ/bin/Debug/netcoreapp3.1
+/ShareDemo/EventBusRabbitMQ/obj

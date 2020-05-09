@@ -11,7 +11,6 @@ namespace DemoAApi.Services
     public class UserServiceImpl : IUserService
     {
         private readonly IMediator mediator;
-        private readonly ServiceFactory serviceFactory;
 
         public UserServiceImpl(IMediator mediator)
         {

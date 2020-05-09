@@ -19,6 +19,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContainerApp.Event", "Conta
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContainerApp.Handler", "ContainerApp.Handler\ContainerApp.Handler.csproj", "{04366A8B-38C0-4D24-88B2-5C8F100CFEEC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventBus", "EventBus\EventBus.csproj", "{72B8B523-7B35-489C-AC92-C177D6B27B73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventBusRabbitMQ", "EventBusRabbitMQ\EventBusRabbitMQ.csproj", "{9D198AA1-8A1E-4AE6-AD9E-5981154F6979}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +61,14 @@ Global
 		{04366A8B-38C0-4D24-88B2-5C8F100CFEEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04366A8B-38C0-4D24-88B2-5C8F100CFEEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04366A8B-38C0-4D24-88B2-5C8F100CFEEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72B8B523-7B35-489C-AC92-C177D6B27B73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72B8B523-7B35-489C-AC92-C177D6B27B73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72B8B523-7B35-489C-AC92-C177D6B27B73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72B8B523-7B35-489C-AC92-C177D6B27B73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D198AA1-8A1E-4AE6-AD9E-5981154F6979}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D198AA1-8A1E-4AE6-AD9E-5981154F6979}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D198AA1-8A1E-4AE6-AD9E-5981154F6979}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D198AA1-8A1E-4AE6-AD9E-5981154F6979}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

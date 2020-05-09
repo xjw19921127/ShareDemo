@@ -1,6 +1,11 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
+using ContainerApp.Event;
+using ContainerApp.Handler;
+using EventBus.Absratctions;
+using EventBus.SubscribeManager;
+using EventBusRabbitMQ;
 using FluentValidation.AspNetCore;
 using IdentityModel.AspNetCore.OAuth2Introspection;
 using IdentityServer4.AccessTokenValidation;
@@ -12,11 +17,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using RabbitMQ.Client;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApi.Handlers;
 using WebApi.Validators;
 
 namespace WebApi
@@ -90,7 +98,41 @@ namespace WebApi
                 };
             });
 
-            var xjwName = Configuration["xjw"];
+            #region EventBus
+            services.AddSingleton<IRabbitMQConnection>(sp =>
+            {
+                var logger = sp.GetRequiredService<ILogger<DefaultRabbitMQConnection>>();
+
+                var factory = new ConnectionFactory()
+                {
+                    HostName = Configuration["EventBusConnection"],
+                    DispatchConsumersAsync = true
+                };
+
+                if (!string.IsNullOrEmpty(Configuration["EventBusUserName"]))
+                    factory.UserName = Configuration["EventBusUserName"];
+
+                if (!string.IsNullOrEmpty(Configuration["EventBusPassword"]))
+                    factory.Password = Configuration["EventBusPassword"];
+
+                return new DefaultRabbitMQConnection(factory, logger);
+            });
+
+            services.AddSingleton<IEventBus, EventBusRabbitMQ.EventBusRabbitMQ>(sp =>
+            {
+                var subscriptionClientName = Configuration["SubscribeClientName"];
+                var rabbitMQPersistentConnection = sp.GetRequiredService<IRabbitMQConnection>();
+                var iLifetimeScope = sp.GetRequiredService<ILifetimeScope>();
+                var logger = sp.GetRequiredService<ILogger<EventBusRabbitMQ.EventBusRabbitMQ>>();
+                var eventBusSubcriptionsManager = sp.GetRequiredService<IEventBusSubscribeManager>();
+
+                return new EventBusRabbitMQ.EventBusRabbitMQ(rabbitMQPersistentConnection, iLifetimeScope, logger, eventBusSubcriptionsManager, subscriptionClientName);
+            });
+
+            services.AddSingleton<IEventBusSubscribeManager, InMemoryEventBusSubscribeManager>();
+
+            services.AddTransient<TestRabbitMQHandler>();
+            #endregion
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
@@ -117,6 +159,9 @@ namespace WebApi
             {
                 endpoints.MapControllers();
             });
+
+            var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
+            eventBus.Subscribe<TestIntegrationEvent, TestRabbitMQHandler>();
 
             ILifetimeScope autofacRoot = app.ApplicationServices.GetAutofacRoot();
             ServiceLocator.SetContainer(autofacRoot);
