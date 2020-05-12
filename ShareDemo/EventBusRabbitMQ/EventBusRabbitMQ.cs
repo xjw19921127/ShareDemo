@@ -101,6 +101,14 @@ namespace EventBusRabbitMQ
             StartBasicConsume();
         }
 
+        public void SubscribeDynamic<TH>(string eventName)
+            where TH : IDynamicIntegrationEventHandler
+        {
+            DoInternalSubscribe(eventName);
+            eventBusSubscribeManager.AddDynamicSubscription<TH>(eventName);
+            StartBasicConsume();
+        }
+
         private void StartBasicConsume() 
         {
             if (consumerChannel != null) 
@@ -212,6 +220,12 @@ namespace EventBusRabbitMQ
             where EH : IIntegrationEventHandler<E>
         {
             eventBusSubscribeManager.RemoveSubscribe<E, EH>();
+        }
+
+        public void UnsubscribeDynamic<TH>(string eventName)
+            where TH : IDynamicIntegrationEventHandler
+        {
+            eventBusSubscribeManager.RemoveDynamicSubscription<TH>(eventName);
         }
     }
 }

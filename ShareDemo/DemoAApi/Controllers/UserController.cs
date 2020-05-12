@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Autofac;
+﻿using Autofac;
 using ContainerApp.Event;
+using DemoAApi.Handlers;
 using DemoAApi.Services;
 using EventBus.Absratctions;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 
 namespace DemoAApi.Controllers
 {
@@ -42,11 +39,29 @@ namespace DemoAApi.Controllers
         }
 
         [HttpGet]
-        [Route("TestRabbitMQ")]
-        public ActionResult<string> TestRabbitMQ()
+        [Route("TestMQPublish")]
+        public ActionResult<string> TestMQPublish()
         {
             var eventMessage = new TestIntegrationEvent(Guid.NewGuid().ToString());
             eventBus.Publish(eventMessage);
+            return Ok("");
+        }
+
+        [HttpGet]
+        [Route("TestMQUnBind")]
+        public ActionResult<string> TestMQUnBind() 
+        {
+            eventBus.UnSubscribe<TestIntegrationEvent, TestEventHandler>();
+            eventBus.UnSubscribe<TestIntegrationEvent, TestEventHandler2>();
+            return Ok("");
+        }
+
+        [HttpGet]
+        [Route("TestMQBind")]
+        public ActionResult<string> TestMQBind()
+        {
+            eventBus.Subscribe<TestIntegrationEvent, TestEventHandler>();
+            eventBus.Subscribe<TestIntegrationEvent, TestEventHandler2>();
             return Ok("");
         }
     }

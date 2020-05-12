@@ -20,6 +20,7 @@
     <ProjectReference Include="..\DemoAApi\DemoAApi.csproj" />
     <ProjectReference Include="..\DemoBApi\DemoBApi.csproj" />
     <ProjectReference Include="..\EventBusRabbitMQ\EventBusRabbitMQ.csproj" />
+    <ProjectReference Include="..\EventBusRedis\EventBusRedis.csproj" />
     <ProjectReference Include="..\EventBus\EventBus.csproj" />
   </ItemGroup>
 

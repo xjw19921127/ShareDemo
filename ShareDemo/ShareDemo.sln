@@ -15,13 +15,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoAApi", "DemoAApi\DemoAA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoBApi", "DemoBApi\DemoBApi.csproj", "{3B18FE33-586D-4587-A937-FF478DD32BC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContainerApp.Event", "ContainerApp.Event\ContainerApp.Event.csproj", "{A7819D92-33D0-4751-8DE5-10E6592DE2AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContainerApp.Event", "ContainerApp.Event\ContainerApp.Event.csproj", "{A7819D92-33D0-4751-8DE5-10E6592DE2AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContainerApp.Handler", "ContainerApp.Handler\ContainerApp.Handler.csproj", "{04366A8B-38C0-4D24-88B2-5C8F100CFEEC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContainerApp.Handler", "ContainerApp.Handler\ContainerApp.Handler.csproj", "{04366A8B-38C0-4D24-88B2-5C8F100CFEEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventBus", "EventBus\EventBus.csproj", "{72B8B523-7B35-489C-AC92-C177D6B27B73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBus", "EventBus\EventBus.csproj", "{72B8B523-7B35-489C-AC92-C177D6B27B73}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventBusRabbitMQ", "EventBusRabbitMQ\EventBusRabbitMQ.csproj", "{9D198AA1-8A1E-4AE6-AD9E-5981154F6979}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBusRabbitMQ", "EventBusRabbitMQ\EventBusRabbitMQ.csproj", "{9D198AA1-8A1E-4AE6-AD9E-5981154F6979}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventBusRedis", "EventBusRedis\EventBusRedis.csproj", "{472E0734-3426-41B9-A456-78F335FB3504}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +71,10 @@ Global
 		{9D198AA1-8A1E-4AE6-AD9E-5981154F6979}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D198AA1-8A1E-4AE6-AD9E-5981154F6979}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D198AA1-8A1E-4AE6-AD9E-5981154F6979}.Release|Any CPU.Build.0 = Release|Any CPU
+		{472E0734-3426-41B9-A456-78F335FB3504}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{472E0734-3426-41B9-A456-78F335FB3504}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{472E0734-3426-41B9-A456-78F335FB3504}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{472E0734-3426-41B9-A456-78F335FB3504}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

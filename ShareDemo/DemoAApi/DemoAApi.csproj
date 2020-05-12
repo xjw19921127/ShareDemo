@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ContainerApp.Event\ContainerApp.Event.csproj" />
+    <ProjectReference Include="..\ContainerApp.Interface\ContainerApp.Interface.csproj" />
   </ItemGroup>
 
 

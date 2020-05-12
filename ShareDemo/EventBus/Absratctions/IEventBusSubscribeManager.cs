@@ -14,9 +14,15 @@ namespace EventBus.Absratctions
             where E : IntegrationEvent
             where EH : IIntegrationEventHandler<E>;
 
+        void AddDynamicSubscription<TH>(string eventName)
+           where TH : IDynamicIntegrationEventHandler;
+
         void RemoveSubscribe<E, EH>()
             where E : IntegrationEvent
             where EH : IIntegrationEventHandler<E>;
+
+        void RemoveDynamicSubscription<TH>(string eventName)
+            where TH : IDynamicIntegrationEventHandler;
 
         bool HasSubscribeForEvent<E>()
             where E : IntegrationEvent;

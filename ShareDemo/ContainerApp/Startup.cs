@@ -3,10 +3,12 @@ using ContainerApp.Event;
 using ContainerApp.Extensions;
 using ContainerApp.Handler;
 using DemoAApi;
+using DemoAApi.Handlers;
 using DemoBApi;
 using EventBus.Absratctions;
 using EventBus.SubscribeManager;
 using EventBusRabbitMQ;
+using EventBusRedis;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -51,41 +53,60 @@ namespace ContainerApp
             //Service×¢Èë
             services.AddDependencyInjectionSetup();
 
-            #region EventBus
-            services.AddSingleton<IRabbitMQConnection>(sp =>
-                {
-                    var logger = sp.GetRequiredService<ILogger<DefaultRabbitMQConnection>>();
+            #region EventBusRabbitMQ
+            //services.AddSingleton<IRabbitMQConnection>(sp =>
+            //    {
+            //        var logger = sp.GetRequiredService<ILogger<DefaultRabbitMQConnection>>();
 
-                    var factory = new ConnectionFactory()
-                    {
-                        HostName = Configuration["EventBusConnection"],
-                        DispatchConsumersAsync = true
-                    };
+            //        var factory = new ConnectionFactory()
+            //        {
+            //            HostName = Configuration["EventBusConnection"],
+            //            DispatchConsumersAsync = true
+            //        };
 
-                    if (!string.IsNullOrEmpty(Configuration["EventBusUserName"]))
-                        factory.UserName = Configuration["EventBusUserName"];
+            //        if (!string.IsNullOrEmpty(Configuration["EventBusUserName"]))
+            //            factory.UserName = Configuration["EventBusUserName"];
 
-                    if (!string.IsNullOrEmpty(Configuration["EventBusPassword"]))
-                        factory.Password = Configuration["EventBusPassword"];
+            //        if (!string.IsNullOrEmpty(Configuration["EventBusPassword"]))
+            //            factory.Password = Configuration["EventBusPassword"];
 
-                    return new DefaultRabbitMQConnection(factory, logger);
-                });
+            //        return new DefaultRabbitMQConnection(factory, logger);
+            //    });
 
-            services.AddSingleton<IEventBus, EventBusRabbitMQ.EventBusRabbitMQ>(sp =>
+            //services.AddSingleton<IEventBus, EventBusRabbitMQ.EventBusRabbitMQ>(sp =>
+            //{
+            //    var subscriptionClientName = Configuration["SubscribeClientName"];
+            //    var rabbitMQPersistentConnection = sp.GetRequiredService<IRabbitMQConnection>();
+            //    var iLifetimeScope = sp.GetRequiredService<ILifetimeScope>();
+            //    var logger = sp.GetRequiredService<ILogger<EventBusRabbitMQ.EventBusRabbitMQ>>();
+            //    var eventBusSubcriptionsManager = sp.GetRequiredService<IEventBusSubscribeManager>();
+
+            //    return new EventBusRabbitMQ.EventBusRabbitMQ(rabbitMQPersistentConnection, iLifetimeScope, logger, eventBusSubcriptionsManager, subscriptionClientName);
+            //});
+            #endregion
+
+            #region EventBusRedis
+            services.AddSingleton<IRedisConnection>(sp =>
             {
-                var subscriptionClientName = Configuration["SubscribeClientName"];
-                var rabbitMQPersistentConnection = sp.GetRequiredService<IRabbitMQConnection>();
-                var iLifetimeScope = sp.GetRequiredService<ILifetimeScope>();
-                var logger = sp.GetRequiredService<ILogger<EventBusRabbitMQ.EventBusRabbitMQ>>();
-                var eventBusSubcriptionsManager = sp.GetRequiredService<IEventBusSubscribeManager>();
-
-                return new EventBusRabbitMQ.EventBusRabbitMQ(rabbitMQPersistentConnection, iLifetimeScope, logger, eventBusSubcriptionsManager, subscriptionClientName);
+                var logger = sp.GetRequiredService<ILogger<DefaultRedisConnection>>();
+                var connectString = Configuration["RedisConnection"];
+                return new DefaultRedisConnection(connectString, logger);
             });
 
-            services.AddSingleton<IEventBusSubscribeManager, InMemoryEventBusSubscribeManager>();
+            services.AddSingleton<IEventBus, EventBusRedis.EventBusRedis>(sp =>
+            {
+                var redisPersistentConnection = sp.GetRequiredService<IRedisConnection>();
+                var iLifetimeScope = sp.GetRequiredService<ILifetimeScope>();
+                var logger = sp.GetRequiredService<ILogger<EventBusRedis.EventBusRedis>>();
+                var eventBusSubcriptionsManager = sp.GetRequiredService<IEventBusSubscribeManager>();
 
-            services.AddTransient<TestEventHandler>();
+                return new EventBusRedis.EventBusRedis(redisPersistentConnection, iLifetimeScope, logger, eventBusSubcriptionsManager);
+            });
             #endregion
+
+            services.AddSingleton<IEventBusSubscribeManager, InMemoryEventBusSubscribeManager>();
+            services.AddTransient<TestEventHandler>();
+            services.AddTransient<TestEventHandler2>();
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
@@ -124,8 +145,8 @@ namespace ContainerApp
             });
 
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
-
             eventBus.Subscribe<TestIntegrationEvent, TestEventHandler>();
+            eventBus.Subscribe<TestIntegrationEvent, TestEventHandler2>();
         }
     }
 }

@@ -85,11 +85,12 @@ namespace EventBus.SubscribeManager
             where E : IntegrationEvent
             where EH : IIntegrationEventHandler<E>
         {
-            var subscribeInfo = FindSubscribeToRemove<E, EH>();
-            
+            var handlerToRemove = FindSubscribeToRemove<E, EH>();
+            var eventName = GetEventKey<E>();
+            DoRemoveHandler(eventName, handlerToRemove);
         }
 
-        private void DoRemoveSubscribe(string eventName, SubscribeInfo subscribeInfo) 
+        private void DoRemoveHandler(string eventName, SubscribeInfo subscribeInfo) 
         {
             if (subscribeInfo != null) 
             {
@@ -125,6 +126,23 @@ namespace EventBus.SubscribeManager
                 return null;
 
             return _handlers[eventName].SingleOrDefault(o => o.HandlerType == handlerType);
-        } 
+        }
+
+        public void AddDynamicSubscription<TH>(string eventName) where TH : IDynamicIntegrationEventHandler
+        {
+            DoAddSubscribe(typeof(TH), eventName, isDynamic: true);
+        }
+
+        public void RemoveDynamicSubscription<TH>(string eventName) where TH : IDynamicIntegrationEventHandler
+        {
+            var handlerToRemove = FindDynamicSubscriptionToRemove<TH>(eventName);
+            DoRemoveHandler(eventName, handlerToRemove);
+        }
+
+        private SubscribeInfo FindDynamicSubscriptionToRemove<TH>(string eventName)
+            where TH : IDynamicIntegrationEventHandler
+        {
+            return DoFindSubscribe(eventName, typeof(TH));
+        }
     }
 }

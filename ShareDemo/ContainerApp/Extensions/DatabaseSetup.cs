@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ContainerApp.Interface.Interfaces;
 using System;
 using Microsoft.Extensions.Configuration;
+using ContainerApp.Interface;
 
 namespace ContainerApp.Extensions
 {

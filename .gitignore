@@ -30,3 +30,5 @@
 /ShareDemo/EventBus/obj
 /ShareDemo/EventBusRabbitMQ/bin/Debug/netcoreapp3.1
 /ShareDemo/EventBusRabbitMQ/obj
+/ShareDemo/EventBusRedis/bin/Debug/netcoreapp3.1
+/ShareDemo/EventBusRedis/obj
